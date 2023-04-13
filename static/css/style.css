@@ -1,0 +1,25 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #bf4124;
+    background-color: #000;
+}
+h1{
+  font-size: 42px;
+  letter-spacing: 2px;
+}
+.navbar-brand{
+  font-family: 'Chivo Mono', monospace;
+}
+.nav-link{
+  font-family: 'Chivo Mono', monospace;
+}
+.table {
+  color: #b6b6b6;
+  padding: 100px;
+  width: 100%;
+}
+td {
+  padding-right: 50px;
+}
