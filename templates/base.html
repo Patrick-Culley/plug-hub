@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzJJ6fNaERr3gzPlQQoCFlolR_jX0jjkY&callback=initMap" async defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,6 +31,7 @@
  <script type="text/Javascript">
   var map;
   var arr; 
+  var num = 0; 
   // Create map 
   function initMap(){
     const data = JSON.parse(document.getElementById('data').value)
@@ -38,17 +40,32 @@
       center: {lat: {{my_location[0]}}, lng: {{my_location[1]}}},
       zoom: 13
     })
+    var infowindow = new google.maps.InfoWindow({}); 
+     
     data.forEach(location => {
-      var infowindow = new google.maps.InfoWindow({
-            content: "Test", 
-            ariaLabel: "Locale"
-        }); 
+      const contentString =
+      '<div id="content">' +
+        '<div id="siteNotice">' +
+        "</div>" +
+          `<h4 id="firstHeading" class="firstHeading">${location.station_name}</h4>` +
+          `<h5>${location.ev_network}</h5>` +
+          '<div id="bodyContent">' +
+          `<p><b>${location.street_address} ${location.city}, ${location.state} ${location.zip}</b></p>` +
+          `<p>${location.station_phone}</p>`
+          '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
+          "https://en.wikipedia.org/w/index.php?title=Uluru</a> " +
+          "(last visited June 22, 2009).</p>" +
+        "</div>" +
+      "</div>";
+      num = num + 1
+      console.log(location)
         var marker = new google.maps.Marker({
           position: {lat: location.latitude, lng: location.longitude}, 
           map: map,
-          label: "Test"
+          label: String(num)
         });  
         google.maps.event.addListener(marker, "click", () => {
+          infowindow.setContent(contentString);
           infowindow.open(map, marker);   
         });
     })
