@@ -15,13 +15,12 @@ h1{
 .nav-link{
   font-family: 'Chivo Mono', monospace;
 }
-.table {
-  color: #b6b6b6;
-  padding: 100px;
-  width: 100%;
-}
-td {
-  padding-right: 50px;
+.list-group {
+  color: black; 
+  border: solid 3px white;
+  margin-bottom: 10px;
+  padding: 20px;
+  list-style-type: none
 }
 
 html, body, table, #map {
