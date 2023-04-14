@@ -31,5 +31,10 @@ def index():
                            my_location=my_location, lat_long=lat_long, llen=llen)
 
 
+@app.route('/search', methods=['GET'])
+def search(): 
+    return render_template('search.html')
+
+
 if __name__ == "__main__":
     app.run(threaded=True)
