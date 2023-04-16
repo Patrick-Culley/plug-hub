@@ -21,24 +21,22 @@
   // Create map 
   function initMap(){
     const data = JSON.parse(document.getElementById('data').value)
-
     var map = new google.maps.Map(document.getElementById("map"), {
       center: {lat: {{my_location[0]}}, lng: {{my_location[1]}}},
       zoom: 13
     })
-
+    // Create Marker window pop-ups 
     var infowindow = new google.maps.InfoWindow({}); 
-    var markers = [] 
     data.forEach(location => {
       const contentString =
       '<div id="content">' +
-        '<div id="siteNotice">' +
-        "</div>" +
-          `<h5 id="firstHeading" class="firstHeading">${location.station_name}</h5>` +
-          `<p>Network: ${location.ev_network}</br>` +
-          `${location.street_address} ${location.city}, ${location.state} ${location.zip}` +
-          `<br>Phone: ${location.station_phone}</p>` + 
-        "</div>" +
+      '<div id="siteNotice">' +
+      "</div>" +
+      `<h5 id="firstHeading" class="firstHeading">${location.station_name}</h5>` +
+      `<p>Network: ${location.ev_network}</br>` +
+      `${location.street_address} ${location.city}, ${location.state} ${location.zip}` +
+      `<br>Phone: ${location.station_phone}</p>` + 
+      "</div>" +
       "</div>";
       num = num + 1
       var marker = new google.maps.Marker({
@@ -46,7 +44,7 @@
         map: map,
         label: String(num)
       });  
-      markers.push(marker);
+      // assign click events for each marker 
       google.maps.event.addListener(marker, "click", () => {
         infowindow.setContent(contentString);
         infowindow.open(map, marker);   
