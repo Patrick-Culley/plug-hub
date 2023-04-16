@@ -12,19 +12,46 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@1,500&display=swap" rel="stylesheet">
         <title>Hub</title>
+         
       </head>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
-      <div class="bi bi-plugin mr-5" style="padding-left: 10px; font-size: 32px;"></div>
-      <span class="navbar-brand mb-0 h1" style="padding-left: 10px; font-size: 32px;">ChargeHub</span>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <form class="form-inline my-2 my-lg-0" action="/search">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        </form>
-        <a class="nav-link" href="#" style="font-size: 24px; margin-right: 5%; margin-left: 55%">Home</a>
-        <a class="nav-link" href="#" style="font-size: 24px;">Sign In</a>
+  <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+    <div class="bi bi-plugin mr-5" style="padding-left: 10px; font-size: 32px;"></div>
+    <span class="navbar-brand mb-0 h1" style="padding-left: 10px; font-size: 32px;"><a href="/" style="text-decoration: none; color: white;">ChargeHub</a></span>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <form class="for;m-inline my-2 my-lg-0" action="/search">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" name="result">
+      </form>
+      <a class="nav-link" href="#" style="font-size: 24px; margin-right: 5%; margin-left: 55%">Home</a>
+      <a class="nav-link" href="#" style="font-size: 24px;">Sign In</a>
+    </div>
+  </nav>
+  <h1 style="font-family: 'Chivo Mono', monospace; color: white;">Response:</h1>
+  <div style="color: white"> 
+  {% for i in data.fuel_stations %}
+  <ul class="list-group">
+    <li class="list-group-item-dark" style="color: white;">
+      <div class="container">
+        <div class="row">
+          <div class="col-6">
+            <div>Station: {{i.station_name}}</div>
+            <div>Address: {{i.street_address}} {{i.city}} {{i.state}} {{i.zip}}</div>
+            <div>Phone: {{i.station_phone}}</div>
+            <div>Hours of Operation: {{i.access_days_time}}</div>
+          </div>
+          <div class="col-6">
+            <div>Network: {{i.ev_network}}</div>
+            <div>Access: {{i.access_code}}</div>
+            <div>Connector Types: {{i.ev_connector_types[0]}}</div>
+          </div>
+        </div>
       </div>
-    </nav>
+      <br>
+    </li>
+  </ul>
+  {% endfor %}
+  </div>
+  <input type="hidden" id="data" value="{{ data }}"/>
 </body>
 </html>
