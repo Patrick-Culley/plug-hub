@@ -38,10 +38,26 @@ def search():
         data = session['request']
     # Obtain lat and long from search input    
     location = geocoder.google(data, key=config.gkey).latlng
-    req = requests.get(f'https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key={config.stations_key}&fuel_type=E85,ELEC&location={data}&limit=100').json() 
+    req = requests.get(f'https://developer.nrel.gov/api/alt-fuel-stations/v1/nearest.json?api_key={config.stations_key}&fuel_type=E85,ELEC&location={data}&limit=200').json() 
     req = req['fuel_stations']
 
     return render_template('search.html', raw=json.dumps(req), locale=location, data=req)   
+
+
+@app.route('/directions', methods=['POST', 'GET'])
+def directions(): 
+    latlng = []
+    result = gmaps.geocode('Dallas, TX')
+    # print(result)
+    # Will neeed to create form for input
+    req = requests.get(f'https://maps.googleapis.com/maps/api/directions/json?destination=Montreal&origin=Toronto&key=AIzaSyAzJJ6fNaERr3gzPlQQoCFlolR_jX0jjkY').json()
+    coordinates = req['routes'][0]['legs'][0]['steps']
+
+    for el in range(len(coordinates)): 
+        latlng.append(coordinates[el]['end_location'])
+        print(latlng[el]['lat'])
+
+    return render_template('directions.html', raw=latlng)
 
 
 if __name__ == "__main__":

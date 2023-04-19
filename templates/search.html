@@ -4,14 +4,17 @@
 <body>
   <nav class="navbar navbar-expand-lg bg-dark border" data-bs-theme="dark" style="margin-bottom: 30px solid #bf4124">
     <div class="bi bi-plugin mr-5" style="padding-left: 10px; font-size: 32px;"></div>
-    <span class="navbar-brand mb-0 h1" style="padding-left: 10px; font-size: 32px;"><a href="/" style="text-decoration: none; color: white;">ChargeHub</a></span>
+    <span class="navbar-brand mb-0 h1" style="padding-left: 10px; font-size: 32px;"><a href="/" style="text-decoration: none; color: white;">PortCharge</a></span>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <form class="form-inline my-2 my-lg-0" action="/search">
         <input class="form-control mr-sm-2" type="text" placeholder="Search" name="result">
       </form>
-      <a class="nav-link" href="#" style="font-size: 24px; margin-right: 5%; margin-left: 55%">Home</a>
-      <a class="nav-link" href="#" style="font-size: 24px;">Sign In</a>
     </div>
+    <div style="padding-right: 5%; width: 50%">
+    <a class="nav-link" href="#" style="font-size: 20px; float: right; padding-left: 10%;">Sign-In</a>
+    <a class="nav-link" href="#" style="font-size: 20px; float: right; padding-left: 10%;">Home </a>
+    <a class="nav-link" href="/directions" style="font-size: 20px; float: right; padding-left: 10%;">Directions</a>
+  </div>
   </nav>
   <div id="map" style="width: 72%; height: 102%; margin: 0; padding: 0; float: left; border-right: solid 10px #bf4124;"></div>
   
@@ -20,7 +23,6 @@
     // Create map 
     function initMap(){
       const data = JSON.parse(document.getElementById('data').value)
-      console.log(data)
       var map = new google.maps.Map(document.getElementById("map"), {
         center: {lat: {{locale[0]}}, lng: {{locale[1]}}},
         zoom: 13
