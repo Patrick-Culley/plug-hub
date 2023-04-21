@@ -5,23 +5,27 @@
     <div id="map"></div>
 
 <script type="text/Javascript">
-    var num = 0; 
-    // Create map 
-    function initMap(){
-        // const data = JSON.parse(document.getElementById('data').value)
+// Create map 
+function initMap(){
+    var data = JSON.parse(document.getElementById('data').value); 
+    var test = data.slice(0, 500);
 
-        new google.maps.Map(document.getElementById("map"), {
-        center: {lat: 44, lng: 45},
-        zoom: 13
-        })
-
-        data.forEach(location => {
-            console.log(location)
-        })
-
-    } initMap() 
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 13,
+        center: { "lat": 37.8715, "lng": -122.2730 },
+        mapTypeId: "terrain",
+    });
+    const directionPath = new google.maps.Polyline({
+        path: test,
+        geodesic: true,
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.5,
+        strokeWeight: 4,
+    });
+    directionPath.setMap(map);
+} initMap();
 </script>
 <h1>Testing</h1>
-<h2>{{raw}}</h2>
-<input type="hidden" id="data" value="{{ raw }}"/>
+<h2>{{route}}</h2>
+<input type="hidden" id="data" value="{{ route }}"/>
 </body>

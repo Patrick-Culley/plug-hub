@@ -6,13 +6,13 @@ import requests, googlemaps, geocoder
 
 # Constructor takes (name) of module as arg 
 app = Flask(__name__)
-
 app.secret_key = 'BAD_SECRET_KEY'
 
 # Obtain Coordinates of current user location 
 gmaps = googlemaps.Client(key=f'{config.gkey}')
 my_location = geocoder.ip('me').latlng
 
+# ROUTES 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     lat_long = {'lat': [],'long': []}
@@ -47,17 +47,28 @@ def search():
 @app.route('/directions', methods=['POST', 'GET'])
 def directions(): 
     latlng = []
-    result = gmaps.geocode('Dallas, TX')
-    # print(result)
-    # Will neeed to create form for input
+    coords = []
+    url = "https://route-and-directions.p.rapidapi.com/v1/routing"
+    querystring = {"waypoints":"37.804829,-122.272476|37.871593,-122.272743","mode":"drive"}
+
+    headers = {
+        "X-RapidAPI-Key": config.rapid_api_key,
+        "X-RapidAPI-Host": "route-and-directions.p.rapidapi.com"
+    }
+    response = requests.request("GET", url, headers=headers, params=querystring)
+    res = response.json()
+    route = res['features'][0]['geometry']['coordinates'][0]
+    print(route)
+    for el in route:
+        coords.append({'lat': el[1], 'lng': el[0]})
+    print(coords)
     req = requests.get(f'https://maps.googleapis.com/maps/api/directions/json?destination=Montreal&origin=Toronto&key=AIzaSyAzJJ6fNaERr3gzPlQQoCFlolR_jX0jjkY').json()
     coordinates = req['routes'][0]['legs'][0]['steps']
 
     for el in range(len(coordinates)): 
         latlng.append(coordinates[el]['end_location'])
-        print(latlng[el]['lat'])
 
-    return render_template('directions.html', raw=latlng)
+    return render_template('directions.html', route=json.dumps(coords))
 
 
 if __name__ == "__main__":
